@@ -8,10 +8,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-import seaborn as sns
-import matplotlib.pyplot as plt
-from datetime import datetime, timedelta
+from datetime import datetime
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -23,16 +20,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Modern CSS styling
+# Custom CSS for better styling
 st.markdown("""
 <style>
-    /* Main styling */
-    .main {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 0;
-    }
-    
-    /* Header styling */
     .main-header {
         background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
         color: white;
@@ -42,21 +32,17 @@ st.markdown("""
         box-shadow: 0 8px 32px rgba(0,0,0,0.1);
         text-align: center;
     }
-    
     .main-header h1 {
         font-size: 3rem;
         font-weight: 700;
         margin: 0;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
-    
     .main-header p {
         font-size: 1.2rem;
         margin: 0.5rem 0 0 0;
         opacity: 0.9;
     }
-    
-    /* Metric cards */
     .metric-card {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
@@ -67,28 +53,9 @@ st.markdown("""
         margin: 0.5rem 0;
         transition: transform 0.3s ease;
     }
-    
     .metric-card:hover {
         transform: translateY(-5px);
     }
-    
-    /* Alert styling */
-    .alert {
-        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-        border: none;
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin: 1rem 0;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-        border-left: 5px solid #ff6b6b;
-    }
-    
-    .alert-success {
-        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        border-left: 5px solid #4CAF50;
-    }
-    
-    /* Section headers */
     .section-header {
         background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
         color: white;
@@ -99,8 +66,6 @@ st.markdown("""
         font-weight: 600;
         box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
-    
-    /* Chart containers */
     .chart-container {
         background: white;
         padding: 1.5rem;
@@ -109,55 +74,19 @@ st.markdown("""
         margin: 1rem 0;
         border: 1px solid #e0e0e0;
     }
-    
-    /* Sidebar styling */
-    .css-1d391kg {
-        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-    }
-    
-    /* Tab styling */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-    }
-    
-    .stTabs [data-baseweb="tab"] {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border-radius: 10px;
-        padding: 10px 20px;
-        font-weight: 600;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    }
-    
-    /* Dataframe styling */
-    .dataframe {
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    }
-    
-    /* Button styling */
-    .stButton > button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
+    .alert {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
         border: none;
-        border-radius: 10px;
-        padding: 0.5rem 1rem;
-        font-weight: 600;
+        padding: 1.5rem;
+        border-radius: 15px;
+        margin: 1rem 0;
         box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease;
+        border-left: 5px solid #ff6b6b;
     }
-    
-    .stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    .alert-success {
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        border-left: 5px solid #4CAF50;
     }
-    
-    /* Recommendation cards */
     .recommendation-card {
         background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
         padding: 1rem;
@@ -166,30 +95,9 @@ st.markdown("""
         border-left: 4px solid #667eea;
         box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
-    
-    /* Hide Streamlit default elements */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
-    
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-        width: 8px;
-    }
-    
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 10px;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -243,7 +151,6 @@ class EcommerceDashboard:
         # Clean expense data
         expense_df = self.data['expenses'].copy()
         expense_df = expense_df[expense_df['Recived Amount'] != 'Particular']
-        # Check if 'Amount' column exists, if not use 'Recived Amount'
         amount_col = 'Amount' if 'Amount' in expense_df.columns else 'Recived Amount'
         expense_df[amount_col] = pd.to_numeric(expense_df[amount_col], errors='coerce')
         expense_df = expense_df[expense_df[amount_col].notna()]
@@ -375,11 +282,19 @@ class EcommerceDashboard:
             with col2:
                 st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                 # Stock status distribution
-                stock_status = pd.cut(
-                    sales_df['Stock'],
-                    bins=[-np.inf, 0, 10, 50, 100, np.inf],
-                    labels=['Out of Stock', 'Critical Low', 'Low', 'Medium', 'High']
-                ).value_counts()
+                def get_stock_status(stock):
+                    if stock == 0:
+                        return 'Out of Stock'
+                    elif stock < 10:
+                        return 'Critical Low'
+                    elif stock < 50:
+                        return 'Low'
+                    elif stock < 100:
+                        return 'Medium'
+                    else:
+                        return 'High'
+                
+                stock_status = sales_df['Stock'].apply(get_stock_status).value_counts()
                 
                 fig = px.pie(
                     values=stock_status.values,
