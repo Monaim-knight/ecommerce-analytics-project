@@ -15,7 +15,7 @@
 2. Sign in with your GitHub account
 3. Click "New app"
 4. Select your repository: `your-username/your-repo-name`
-5. Set the main file path: `dashboard/main_dashboard.py`
+5. Set the main file path: `dashboard/simple_dashboard.py`
 6. Set Python version: `3.10`
 7. Click "Deploy!"
 
@@ -33,13 +33,13 @@
 If you encounter deployment issues:
 
 1. **Check requirements.txt**: Ensure all packages are compatible
-2. **Verify file paths**: Make sure `dashboard/main_dashboard.py` exists
+2. **Verify file paths**: Make sure `dashboard/simple_dashboard.py` exists
 3. **Check data files**: Ensure CSV files are in the root directory
 4. **Review logs**: Check the Streamlit Cloud logs for error messages
 
 ### Files Included in Deployment
-- `dashboard/main_dashboard.py` - Main dashboard application
-- `requirements.txt` - Python dependencies
+- `dashboard/simple_dashboard.py` - Simplified dashboard application
+- `requirements.txt` - Python dependencies (minimal set)
 - `runtime.txt` - Python version specification
 - `.streamlit/config.toml` - Streamlit configuration
 - CSV data files (Sale Report.csv, May-2022.csv, etc.)
@@ -51,13 +51,14 @@ If you encounter deployment issues:
 - Inventory analysis
 - Pricing analysis
 - Category performance tracking
-- Size analysis
 - Automated alerts and recommendations
-- Data export capabilities
 
 This dashboard showcases skills relevant to Product Manager roles:
 - Data-driven decision making
 - Real-time monitoring
 - Stakeholder communication
 - Growth optimization
-- E-commerce analytics 
+- E-commerce analytics
+
+### Alternative Dashboard
+If you prefer the full-featured version, you can also deploy `dashboard/main_dashboard.py`, but the simple version is more reliable for deployment. 
