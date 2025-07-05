@@ -23,27 +23,172 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for better styling
+# Modern CSS styling
 st.markdown("""
 <style>
+    /* Main styling */
+    .main {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 0;
+    }
+    
+    /* Header styling */
     .main-header {
-        font-size: 2.5rem;
-        color: #1f77b4;
-        text-align: center;
+        background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
         margin-bottom: 2rem;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        text-align: center;
     }
+    
+    .main-header h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .main-header p {
+        font-size: 1.2rem;
+        margin: 0.5rem 0 0 0;
+        opacity: 0.9;
+    }
+    
+    /* Metric cards */
     .metric-card {
-        background-color: #f0f2f6;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        border-left: 4px solid #1f77b4;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        border: none;
+        margin: 0.5rem 0;
+        transition: transform 0.3s ease;
     }
+    
+    .metric-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    /* Alert styling */
     .alert {
-        background-color: #fff3cd;
-        border: 1px solid #ffeaa7;
-        padding: 1rem;
-        border-radius: 0.5rem;
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        border: none;
+        padding: 1.5rem;
+        border-radius: 15px;
         margin: 1rem 0;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        border-left: 5px solid #ff6b6b;
+    }
+    
+    .alert-success {
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        border-left: 5px solid #4CAF50;
+    }
+    
+    /* Section headers */
+    .section-header {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        margin: 2rem 0 1rem 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    
+    /* Chart containers */
+    .chart-container {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        margin: 1rem 0;
+        border: 1px solid #e0e0e0;
+    }
+    
+    /* Sidebar styling */
+    .css-1d391kg {
+        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    /* Tab styling */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 600;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    
+    /* Dataframe styling */
+    .dataframe {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    
+    /* Button styling */
+    .stButton > button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    
+    /* Recommendation cards */
+    .recommendation-card {
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 0.5rem 0;
+        border-left: 4px solid #667eea;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    
+    /* Hide Streamlit default elements */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -98,27 +243,55 @@ class EcommerceDashboard:
         # Clean expense data
         expense_df = self.data['expenses'].copy()
         expense_df = expense_df[expense_df['Recived Amount'] != 'Particular']
-        expense_df['Amount'] = pd.to_numeric(expense_df['Amount'], errors='coerce')
-        expense_df = expense_df[expense_df['Amount'].notna()]
+        # Check if 'Amount' column exists, if not use 'Recived Amount'
+        amount_col = 'Amount' if 'Amount' in expense_df.columns else 'Recived Amount'
+        expense_df[amount_col] = pd.to_numeric(expense_df[amount_col], errors='coerce')
+        expense_df = expense_df[expense_df[amount_col].notna()]
         self.data['expenses_clean'] = expense_df
     
     def render_header(self):
         """Render dashboard header"""
-        st.markdown('<h1 class="main-header">📊 E-Commerce Analytics Dashboard</h1>', unsafe_allow_html=True)
-        st.markdown("### Real-time monitoring and data-driven insights for e-commerce growth optimization")
+        st.markdown("""
+        <div class="main-header">
+            <h1>📊 E-Commerce Analytics Dashboard</h1>
+            <p>Real-time monitoring and data-driven insights for e-commerce growth optimization</p>
+        </div>
+        """, unsafe_allow_html=True)
         
-        # Current timestamp
-        col1, col2, col3 = st.columns(3)
+        # Current timestamp and stats
+        col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric("Last Updated", datetime.now().strftime("%Y-%m-%d %H:%M"))
+            st.markdown("""
+            <div class="metric-card">
+                <h3>🕒 Last Updated</h3>
+                <p style="font-size: 1.2rem; margin: 0;">{}</p>
+            </div>
+            """.format(datetime.now().strftime("%Y-%m-%d %H:%M")), unsafe_allow_html=True)
         with col2:
-            st.metric("Data Sources", len(self.data))
+            st.markdown("""
+            <div class="metric-card">
+                <h3>📁 Data Sources</h3>
+                <p style="font-size: 1.2rem; margin: 0;">{}</p>
+            </div>
+            """.format(len(self.data)), unsafe_allow_html=True)
         with col3:
-            st.metric("Total Products", len(self.data.get('sales_clean', pd.DataFrame())))
+            st.markdown("""
+            <div class="metric-card">
+                <h3>📦 Total Products</h3>
+                <p style="font-size: 1.2rem; margin: 0;">{:,}</p>
+            </div>
+            """.format(len(self.data.get('sales_clean', pd.DataFrame()))), unsafe_allow_html=True)
+        with col4:
+            st.markdown("""
+            <div class="metric-card">
+                <h3>📊 Dashboard Status</h3>
+                <p style="font-size: 1.2rem; margin: 0;">🟢 Active</p>
+            </div>
+            """, unsafe_allow_html=True)
     
     def render_kpi_cards(self):
         """Render key performance indicators"""
-        st.markdown("## 📈 Key Performance Indicators")
+        st.markdown('<div class="section-header">📈 Key Performance Indicators</div>', unsafe_allow_html=True)
         
         if 'sales_clean' in self.data and not self.data['sales_clean'].empty:
             sales_df = self.data['sales_clean']
@@ -132,37 +305,44 @@ class EcommerceDashboard:
             col1, col2, col3, col4 = st.columns(4)
             
             with col1:
-                st.metric(
-                    "Total Stock",
-                    f"{total_stock:,.0f}",
-                    delta=f"{total_stock - (total_stock * 0.95):,.0f}"
-                )
+                st.markdown("""
+                <div class="metric-card">
+                    <h3>📦 Total Stock</h3>
+                    <p style="font-size: 2rem; font-weight: bold; margin: 0;">{:,}</p>
+                    <p style="font-size: 0.9rem; margin: 0.5rem 0 0 0;">Units Available</p>
+                </div>
+                """.format(total_stock), unsafe_allow_html=True)
             
             with col2:
-                st.metric(
-                    "Total Products",
-                    f"{total_products:,}",
-                    delta=f"{total_products - (total_products * 0.98):,}"
-                )
+                st.markdown("""
+                <div class="metric-card">
+                    <h3>🏷️ Total Products</h3>
+                    <p style="font-size: 2rem; font-weight: bold; margin: 0;">{:,}</p>
+                    <p style="font-size: 0.9rem; margin: 0.5rem 0 0 0;">Active SKUs</p>
+                </div>
+                """.format(total_products), unsafe_allow_html=True)
             
             with col3:
-                st.metric(
-                    "Average Stock",
-                    f"{avg_stock:.1f}",
-                    delta=f"{avg_stock - (avg_stock * 0.95):.1f}"
-                )
+                st.markdown("""
+                <div class="metric-card">
+                    <h3>📊 Average Stock</h3>
+                    <p style="font-size: 2rem; font-weight: bold; margin: 0;">{:.1f}</p>
+                    <p style="font-size: 0.9rem; margin: 0.5rem 0 0 0;">Per Product</p>
+                </div>
+                """.format(avg_stock), unsafe_allow_html=True)
             
             with col4:
-                st.metric(
-                    "Out of Stock",
-                    f"{out_of_stock:,}",
-                    delta=f"{out_of_stock - (out_of_stock * 1.05):,}",
-                    delta_color="inverse"
-                )
+                st.markdown("""
+                <div class="metric-card">
+                    <h3>⚠️ Out of Stock</h3>
+                    <p style="font-size: 2rem; font-weight: bold; margin: 0;">{:,}</p>
+                    <p style="font-size: 0.9rem; margin: 0.5rem 0 0 0;">Need Restocking</p>
+                </div>
+                """.format(out_of_stock), unsafe_allow_html=True)
     
     def render_inventory_analysis(self):
         """Render inventory analysis section"""
-        st.markdown("## 📦 Inventory Analysis")
+        st.markdown('<div class="section-header">📦 Inventory Analysis</div>', unsafe_allow_html=True)
         
         if 'sales_clean' in self.data and not self.data['sales_clean'].empty:
             sales_df = self.data['sales_clean']
@@ -170,6 +350,7 @@ class EcommerceDashboard:
             col1, col2 = st.columns(2)
             
             with col1:
+                st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                 # Stock distribution by category
                 category_stock = sales_df.groupby('Category')['Stock'].sum().sort_values(ascending=False)
                 
@@ -178,12 +359,21 @@ class EcommerceDashboard:
                     y=category_stock.index,
                     orientation='h',
                     title="Stock Distribution by Category",
-                    labels={'x': 'Total Stock', 'y': 'Category'}
+                    labels={'x': 'Total Stock', 'y': 'Category'},
+                    color=category_stock.values,
+                    color_continuous_scale='viridis'
                 )
-                fig.update_layout(height=400)
+                fig.update_layout(
+                    height=400,
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='#333')
+                )
                 st.plotly_chart(fig, use_container_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
             
             with col2:
+                st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                 # Stock status distribution
                 stock_status = pd.cut(
                     sales_df['Stock'],
@@ -194,14 +384,16 @@ class EcommerceDashboard:
                 fig = px.pie(
                     values=stock_status.values,
                     names=stock_status.index,
-                    title="Stock Status Distribution"
+                    title="Stock Status Distribution",
+                    color_discrete_sequence=px.colors.qualitative.Set3
                 )
                 fig.update_layout(height=400)
                 st.plotly_chart(fig, use_container_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
     
     def render_pricing_analysis(self):
         """Render pricing analysis section"""
-        st.markdown("## 💰 Pricing Analysis")
+        st.markdown('<div class="section-header">💰 Pricing Analysis</div>', unsafe_allow_html=True)
         
         if 'pricing_clean' in self.data and not self.data['pricing_clean'].empty:
             pricing_df = self.data['pricing_clean']
@@ -209,6 +401,7 @@ class EcommerceDashboard:
             col1, col2 = st.columns(2)
             
             with col1:
+                st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                 # Price distribution
                 if 'Final MRP Old' in pricing_df.columns:
                     fig = px.histogram(
@@ -216,12 +409,20 @@ class EcommerceDashboard:
                         x='Final MRP Old',
                         nbins=30,
                         title="Price Distribution",
-                        labels={'Final MRP Old': 'Price (₹)'}
+                        labels={'Final MRP Old': 'Price (₹)'},
+                        color_discrete_sequence=['#667eea']
                     )
-                    fig.update_layout(height=400)
+                    fig.update_layout(
+                        height=400,
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        paper_bgcolor='rgba(0,0,0,0)',
+                        font=dict(color='#333')
+                    )
                     st.plotly_chart(fig, use_container_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
             
             with col2:
+                st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                 # Margin analysis
                 if 'Margin_Percentage' in pricing_df.columns:
                     margin_data = pricing_df[pricing_df['Margin_Percentage'].notna()]
@@ -229,15 +430,22 @@ class EcommerceDashboard:
                     fig = px.box(
                         margin_data,
                         y='Margin_Percentage',
-                        title="Margin Distribution by Category",
-                        color='Category' if 'Category' in margin_data.columns else None
+                        title="Margin Distribution",
+                        color='Category' if 'Category' in margin_data.columns else None,
+                        color_discrete_sequence=px.colors.qualitative.Set3
                     )
-                    fig.update_layout(height=400)
+                    fig.update_layout(
+                        height=400,
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        paper_bgcolor='rgba(0,0,0,0)',
+                        font=dict(color='#333')
+                    )
                     st.plotly_chart(fig, use_container_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
     
     def render_category_analysis(self):
         """Render category performance analysis"""
-        st.markdown("## 🏷️ Category Performance")
+        st.markdown('<div class="section-header">🏷️ Category Performance</div>', unsafe_allow_html=True)
         
         if 'sales_clean' in self.data and not self.data['sales_clean'].empty:
             sales_df = self.data['sales_clean']
@@ -248,42 +456,72 @@ class EcommerceDashboard:
                 'SKU Code': 'count'
             }).round(2)
             
-            category_analysis.columns = ['Total_Stock', 'Avg_Stock', 'Product_Count']
+            # Flatten column names
+            category_analysis.columns = ['_'.join(col).strip() for col in category_analysis.columns.values]
+            # Rename columns for clarity
+            category_analysis = category_analysis.rename(columns={
+                'Stock_sum': 'Total_Stock',
+                'Stock_mean': 'Avg_Stock', 
+                'Stock_count': 'Stock_Count',
+                'SKU Code_count': 'Product_Count'
+            })
             category_analysis = category_analysis.sort_values('Total_Stock', ascending=False)
             
             # Display category table
+            st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+            st.markdown("**Category Performance Summary**")
             st.dataframe(
                 category_analysis,
-                use_container_width=True,
-                caption="Category Performance Summary"
+                use_container_width=True
             )
+            st.markdown('</div>', unsafe_allow_html=True)
             
             # Category visualization
             col1, col2 = st.columns(2)
             
             with col1:
+                st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                 fig = px.bar(
                     x=category_analysis.index,
                     y=category_analysis['Total_Stock'],
                     title="Total Stock by Category",
-                    labels={'x': 'Category', 'y': 'Total Stock'}
+                    labels={'x': 'Category', 'y': 'Total Stock'},
+                    color=category_analysis['Total_Stock'],
+                    color_continuous_scale='viridis'
                 )
                 fig.update_xaxes(tickangle=45)
+                fig.update_layout(
+                    height=400,
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='#333')
+                )
                 st.plotly_chart(fig, use_container_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
             
             with col2:
+                st.markdown('<div class="chart-container">', unsafe_allow_html=True)
                 fig = px.bar(
                     x=category_analysis.index,
                     y=category_analysis['Product_Count'],
                     title="Product Count by Category",
-                    labels={'x': 'Category', 'y': 'Product Count'}
+                    labels={'x': 'Category', 'y': 'Product Count'},
+                    color=category_analysis['Product_Count'],
+                    color_continuous_scale='plasma'
                 )
                 fig.update_xaxes(tickangle=45)
+                fig.update_layout(
+                    height=400,
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='#333')
+                )
                 st.plotly_chart(fig, use_container_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
     
     def render_size_analysis(self):
         """Render size analysis"""
-        st.markdown("## 📏 Size Analysis")
+        st.markdown('<div class="section-header">📏 Size Analysis</div>', unsafe_allow_html=True)
         
         if 'sales_clean' in self.data and not self.data['sales_clean'].empty:
             sales_df = self.data['sales_clean']
@@ -293,28 +531,47 @@ class EcommerceDashboard:
                 'Stock': ['sum', 'mean', 'count']
             }).round(2)
             
-            size_analysis.columns = ['Total_Stock', 'Avg_Stock', 'Product_Count']
+            # Flatten column names
+            size_analysis.columns = ['_'.join(col).strip() for col in size_analysis.columns.values]
+            # Rename columns for clarity
+            size_analysis = size_analysis.rename(columns={
+                'Stock_sum': 'Total_Stock',
+                'Stock_mean': 'Avg_Stock',
+                'Stock_count': 'Product_Count'
+            })
             size_analysis = size_analysis.sort_values('Total_Stock', ascending=False)
             
             # Display size table
+            st.markdown('<div class="chart-container">', unsafe_allow_html=True)
+            st.markdown("**Size Performance Summary**")
             st.dataframe(
                 size_analysis,
-                use_container_width=True,
-                caption="Size Performance Summary"
+                use_container_width=True
             )
+            st.markdown('</div>', unsafe_allow_html=True)
             
             # Size visualization
+            st.markdown('<div class="chart-container">', unsafe_allow_html=True)
             fig = px.bar(
                 x=size_analysis.index,
                 y=size_analysis['Total_Stock'],
                 title="Stock Distribution by Size",
-                labels={'x': 'Size', 'y': 'Total Stock'}
+                labels={'x': 'Size', 'y': 'Total Stock'},
+                color=size_analysis['Total_Stock'],
+                color_continuous_scale='viridis'
+            )
+            fig.update_layout(
+                height=400,
+                plot_bgcolor='rgba(0,0,0,0)',
+                paper_bgcolor='rgba(0,0,0,0)',
+                font=dict(color='#333')
             )
             st.plotly_chart(fig, use_container_width=True)
+            st.markdown('</div>', unsafe_allow_html=True)
     
     def render_alerts(self):
         """Render alerts and warnings"""
-        st.markdown("## ⚠️ Alerts & Warnings")
+        st.markdown('<div class="section-header">⚠️ Alerts & Warnings</div>', unsafe_allow_html=True)
         
         alerts = []
         
@@ -349,11 +606,11 @@ class EcommerceDashboard:
             for alert in alerts:
                 st.markdown(f'<div class="alert">{alert}</div>', unsafe_allow_html=True)
         else:
-            st.success("✅ No critical alerts at this time")
+            st.markdown('<div class="alert alert-success">✅ No critical alerts at this time</div>', unsafe_allow_html=True)
     
     def render_recommendations(self):
         """Render data-driven recommendations"""
-        st.markdown("## 💡 Data-Driven Recommendations")
+        st.markdown('<div class="section-header">💡 Data-Driven Recommendations</div>', unsafe_allow_html=True)
         
         recommendations = []
         
@@ -382,11 +639,11 @@ class EcommerceDashboard:
                 recommendations.append(f"💰 **Average margin**: {avg_margin:.1f}% - consider pricing strategy")
         
         for i, rec in enumerate(recommendations, 1):
-            st.markdown(f"{i}. {rec}")
+            st.markdown(f'<div class="recommendation-card">{i}. {rec}</div>', unsafe_allow_html=True)
     
     def render_export_options(self):
         """Render data export options"""
-        st.markdown("## 📤 Export Options")
+        st.markdown('<div class="section-header">📤 Export Options</div>', unsafe_allow_html=True)
         
         col1, col2, col3 = st.columns(3)
         
@@ -394,7 +651,7 @@ class EcommerceDashboard:
             if 'sales_clean' in self.data:
                 csv = self.data['sales_clean'].to_csv(index=False)
                 st.download_button(
-                    label="Download Sales Data",
+                    label="📊 Download Sales Data",
                     data=csv,
                     file_name="sales_analysis.csv",
                     mime="text/csv"
@@ -404,7 +661,7 @@ class EcommerceDashboard:
             if 'pricing_clean' in self.data:
                 csv = self.data['pricing_clean'].to_csv(index=False)
                 st.download_button(
-                    label="Download Pricing Data",
+                    label="💰 Download Pricing Data",
                     data=csv,
                     file_name="pricing_analysis.csv",
                     mime="text/csv"
@@ -415,7 +672,7 @@ class EcommerceDashboard:
             if 'sales_clean' in self.data:
                 summary = self.generate_summary_report()
                 st.download_button(
-                    label="Download Summary Report",
+                    label="📋 Download Summary Report",
                     data=summary,
                     file_name="summary_report.txt",
                     mime="text/plain"
@@ -454,7 +711,12 @@ class EcommerceDashboard:
         
         # Sidebar filters
         with st.sidebar:
-            st.markdown("## 🔍 Filters")
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                        color: white; padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                <h3>🔍 Filters</h3>
+            </div>
+            """, unsafe_allow_html=True)
             
             if 'sales_clean' in self.data:
                 categories = ['All'] + list(self.data['sales_clean']['Category'].unique())
@@ -463,7 +725,13 @@ class EcommerceDashboard:
                 sizes = ['All'] + list(self.data['sales_clean']['Size'].unique())
                 selected_size = st.selectbox("Select Size", sizes)
             
-            st.markdown("## 📊 Quick Stats")
+            st.markdown("""
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                        color: white; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                <h3>📊 Quick Stats</h3>
+            </div>
+            """, unsafe_allow_html=True)
+            
             if 'sales_clean' in self.data:
                 sales_df = self.data['sales_clean']
                 st.metric("Total Products", len(sales_df))
@@ -495,13 +763,6 @@ class EcommerceDashboard:
 
 def main():
     """Main function to run the dashboard"""
-    st.markdown("""
-    <div style="text-align: center; padding: 1rem; background-color: #f0f2f6; border-radius: 0.5rem; margin-bottom: 2rem;">
-        <h3>🚀 E-Commerce Analytics Dashboard</h3>
-        <p>Real-time monitoring and data-driven insights for growth optimization</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
     # Initialize and run dashboard
     dashboard = EcommerceDashboard()
     dashboard.run_dashboard()

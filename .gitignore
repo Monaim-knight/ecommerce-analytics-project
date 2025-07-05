@@ -114,4 +114,11 @@ reports/*.html
 reports/*.pdf
 *.png
 *.jpg
-*.jpeg 
+*.jpeg
+
+# Interview preparation files (private)
+INTERVIEW_PREPARATION_GUIDE.md
+E-commerce_Analytics_Interview_Guide.pdf
+create_pdf_simple.py
+create_pdf_bash.sh
+style.css 
